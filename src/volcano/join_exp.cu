@@ -552,6 +552,7 @@ void parse_args(int argc, char** argv, struct join_args& args) {
             continue;
         case 'f':
             args.data_path_prefix = std::string(optarg);
+            if(args.data_path_prefix.back() != '/') args.data_path_prefix += "/";
             continue;
         case 'e':
             args.selectivity = atoi(optarg);

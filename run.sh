@@ -10,7 +10,7 @@ python exp/run_join_exp.py \
         -e 0 1 2 3 4 \
         -r $1 \
         -p exp_results/gpu_join \
-        -f $2
+        -d $2
 
 python exp/run_join_exp.py \
         -b ./bin/volcano/join_exp_8b8b \
@@ -19,7 +19,7 @@ python exp/run_join_exp.py \
         -e 5 \
         -r $1 \
         -p exp_results/gpu_join \
-        -f $2
+        -d $2
     
 python exp/run_join_exp.py \
         -b ./bin/volcano/join_exp_4b8b \
@@ -28,13 +28,13 @@ python exp/run_join_exp.py \
         -e 6 \
         -r $1 \
         -p exp_results/gpu_join \
-        -f $2
+        -d $2
 
 echo "Run the sequence of joins from Section 5.2.8"
 for a in SMJ SMJI SHJ PHJ
 do 
     for r in {1..$1}
     do 
-        ./bin/volcano/join_pipeline /scratch/wubo/joinmb/ 25 27 $a
+        ./bin/volcano/join_pipeline $2 25 27 $a
     done
 done

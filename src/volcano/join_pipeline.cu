@@ -203,6 +203,7 @@ int main(int argc, char** argv) {
     }
     
     std::string data_path_prefix = argv[1];
+    if(data_path_prefix.back() != '/') data_path_prefix += "/";
     int N_dim = atoi(argv[2]);
     int N_fact = atoi(argv[3]);
     std::string algo = argv[4];
