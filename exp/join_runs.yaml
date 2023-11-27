@@ -1,0 +1,119 @@
+experiments:
+  - name: pkfk_vanilla
+    group: 0
+    output: pkfk_vanilla.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr IN (25, 26, 27) AND 
+            ratio in (0, 1, 2) AND
+            nr+ratio < 30 AND
+            pr in (1,2) AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity = 1 AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, ratio, pr, ps;
+  - name: pkfk_skew
+    group: 1
+    output: pkfk_skew.csv
+    query: >
+      SELECT DISTINCT *
+      FROM
+            (SELECT DISTINCT *
+            FROM df
+            WHERE nr IN (25, 26, 27) AND 
+                  ratio = 0 AND
+                  pr in (1,2) AND pr = ps AND
+                  dist = 'zipf' AND
+                  join_type = 'pkfk' AND
+                  unique_keys = nr AND
+                  selectivity = 1 AND
+                  (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7)))
+      ORDER BY algo, nr, ratio, pr, ps, zipf_factor;
+  - name: pkfk_matchrate
+    group: 2
+    output: pkfk_matchrate_fixsize.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr IN (25, 26, 27) AND 
+            ratio = 0 AND
+            pr=2 AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity in (1, 2, 4, 8, 16) AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, pr, ps, selectivity;
+  - name: pkfk_ratio
+    group: 3
+    output: pkfk_ratio.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr + ratio = 27 AND 
+            ratio in (0, 1, 2, 3, 4) AND
+            nr+ratio < 30 AND
+            pr in (1,2) AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity = 1 AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, ratio, pr, ps;
+  - name: pkfk_morecols
+    group: 4
+    output: pkfk_morecols.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr = 27 AND 
+            ratio = 0 AND
+            nr+ratio < 30 AND
+            1 <= pr AND pr <= 6 AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity = 1 AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, ratio, pr, ps;
+  - name: pkfk_8b8b
+    group: 5
+    output: pkfk_8b8b.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr IN (25, 26, 27) AND 
+            ratio in (0,1) AND
+            nr+ratio < 30 AND
+            pr = 2 AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity = 1 AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, ratio, pr, ps;
+  - name: pkfk_4b8b
+    group: 6
+    output: pkfk_4b8b.csv
+    query: >
+      SELECT DISTINCT *
+      FROM df
+      WHERE nr IN (25, 26, 27) AND 
+            ratio in (0,1) AND
+            nr+ratio < 30 AND
+            pr = 2 AND pr = ps AND
+            dist = 'uniform' AND
+            join_type = 'pkfk' AND
+            unique_keys = nr AND
+            zipf_factor = 0 AND
+            selectivity = 1 AND
+            (algo LIKE 'smj%' OR p = 9 AND (nr < 28 AND q = 6 or nr >= 28 AND q = 7))
+      ORDER BY algo, nr, ratio, pr, ps;

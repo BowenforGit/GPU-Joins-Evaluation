@@ -1,0 +1,12 @@
+bin/
+.vscode/
+obj/
+log*
+exp_results/
+*.nsys-rep
+*.ncu-rep
+*.csv
+*_stdout.txt
+src/volcano/join_exp_4b8b.cu
+src/volcano/join_exp_4b4b.cu
+src/volcano/join_exp_8b8b.cu
